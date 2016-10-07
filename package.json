@@ -1,0 +1,20 @@
+{
+  "name": "grunt-ts-new",
+  "version": "0.1.0",
+  "description": "experimental TypeScript compilation plugin for Grunt",
+  "main": "index.js",
+  "scripts": {
+    "test": "node node_modules/nodeunit/bin/nodeunit test/tests.js",
+    "build": "node node_modules/typescript/bin/tsc -p ."
+  },
+  "author": "Steve Ognibene",
+  "license": "MIT",
+  "devDependencies": {
+    "nodeunit": "^0.10.2",
+    "typescript": "^2.1.0-dev.20161006"
+  },
+  "dependencies": {
+    "@types/grunt": "^0.4.20",
+    "@types/nodeunit": "0.0.29"
+  }
+}
