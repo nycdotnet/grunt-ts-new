@@ -1,9 +1,22 @@
+import * as integrationTests from './test/integrationTests';
 
 const gruntTsConfig : {[index: string] : IGruntTsGruntfileConfiguration} = {
-  default: {
+  test_Integration_CompileTheFruitScripts: {
     options: {
-      declaration: false
-    }
+    },
+    src: ["artifacts/FruitScripts/**/*.ts"]
+  },
+  test_FruitScriptsSrc: {
+    options: {
+      __integrationTestFunction : integrationTests.test_FruitScriptsSrc
+    },
+    src: ["artifacts/FruitScripts/**/*.ts"]
+  },
+  test_FruitScriptsFiles: {
+    options: {
+      __integrationTestFunction : integrationTests.test_FruitScriptsFiles
+    },
+    files: [{src: "artifacts/FruitScripts/**/*.ts"}]
   }
 };
 

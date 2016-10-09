@@ -1,12 +1,22 @@
 /** This interface contains all of the options supported by grunt-ts
  *  See https://www.typescriptlang.org/docs/handbook/compiler-options.html for the latest info */
 interface IGruntTsGruntfileConfiguration {
-  options : IGruntTsGruntfileConfigurationOptions
+  options? : IGruntTsGruntfileConfigurationOptions;
+  src?: itemOrArrayOrNestedArray<string>;
+  dest?: itemOrArrayOrNestedArray<string>;
+  files? : srcDest | srcDest[] | {[dest: string] : itemOrArrayOrNestedArray<string>} ;
 }
+
+type itemOrArrayOrNestedArray<T> = T | T[] | T[][] | T[][][];
+type srcDest = {
+  src? : itemOrArrayOrNestedArray<string>,
+  dest? : itemOrArrayOrNestedArray<string>
+};
 
 /** This interface contains all of the options supported by grunt-ts 'options' object
  *  See https://www.typescriptlang.org/docs/handbook/compiler-options.html for the latest info */
 interface IGruntTsGruntfileConfigurationOptions {
+    __integrationTestFunction?: (ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>, grunt: IGrunt) => boolean;
     declaration?: boolean;
     emitDecoratorMetadata?: boolean;
     experimentalDecorators?: boolean;
