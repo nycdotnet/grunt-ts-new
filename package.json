@@ -10,12 +10,14 @@
   "author": "Steve Ognibene",
   "license": "MIT",
   "devDependencies": {
+    "@types/bluebird": "^3.0.35",
+    "@types/grunt": "^0.4.20",
+    "@types/nodeunit": "0.0.29",
     "nodeunit": "^0.10.2",
     "typescript": "^2.1.0-dev.20161006"
   },
   "dependencies": {
-    "@types/grunt": "^0.4.20",
-    "@types/nodeunit": "0.0.29",
+    "bluebird": "^3.4.6",
     "grunt": "^1.0.1"
   }
 }
