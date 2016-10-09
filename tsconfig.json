@@ -3,7 +3,7 @@
         "target": "es5",
         "module": "commonjs",
         "moduleResolution": "node",
-        "isolatedModules": false,
+        "isolatedModules": true,
         "jsx": "react",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
@@ -12,17 +12,21 @@
         "noImplicitUseStrict": false,
         "removeComments": true,
         "lib": ["es5"],
-        "preserveConstEnums": true,
-        "suppressImplicitAnyIndexErrors": true
+        "preserveConstEnums": false,
+        "suppressImplicitAnyIndexErrors": true,
+        "suppressExcessPropertyErrors": false,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "skipDefaultLibCheck": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "allowUnreachableCode": false,
+        "forceConsistentCasingInFileNames": true,
+        "strictNullChecks": true
     },
-    "exclude": [
-      "node_modules"
-    ],
-    "include": [
-      "node_modules/@types/**/*",
-      "tasks/**/*",
-      "test/**/*"
-    ],
+    "include" : ["tasks", "test"],
+    "exclude" : ["node_modules"],
     "compileOnSave": true,
     "buildOnSave": false,
     "atom": {
