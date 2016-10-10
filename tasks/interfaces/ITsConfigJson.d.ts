@@ -1,3 +1,7 @@
+/** This documents the valid and supported items in tsconfig.json "root" object.
+ * see http://json.schemastore.org/tsconfig
+ * also: https://www.typescriptlang.org/docs/handbook/compiler-options.html
+ */
 interface ITSConfigJsonFile {
     compilerOptions?: ITsConfigJsonCompilerOptions;
     files?: string[];
@@ -6,24 +10,40 @@ interface ITSConfigJsonFile {
     filesGlob?: string[];
 }
 
-// originally sourced from atom-typescript
+/** This documents the valid and supported items in tsconfig.json compilerOptions object.
+ * originally sourced from atom-typescript
+ * see http://json.schemastore.org/tsconfig
+ * also: https://www.typescriptlang.org/docs/handbook/compiler-options.html
+ */
 interface ITsConfigJsonCompilerOptions {
-    allowNonTsExtensions?: boolean;
+    allowJs?: boolean;
+    allowSyntheticDefaultImports?: boolean;
+    allowUnreachableCode?: boolean;
+    allowUnusedLabels?:boolean;
+    baseUrl?: string;
+    /** character set of the input files. */
     charset?: string;
-    codepage?: number;
     declaration?: boolean;
+    declarationDir?: boolean;
     diagnostics?: boolean;
+    disableSizeLimit?: boolean;
     emitBOM?: boolean;
+    emitDecoratorMetadata?: boolean;
     experimentalAsyncFunctions?: boolean;
     experimentalDecorators?: boolean;
-    emitDecoratorMetadata?: boolean;
-    help?: boolean;
+    forceConsistentCasingInFileNames?: boolean;
+    //help?: boolean; //NOT SUPPORTED IN TSCONFIG.JSON
     isolatedModules?: boolean;
+    //init?: void; //NOT SUPPORTED IN TSCONFIG.JSON
     inlineSourceMap?: boolean;
     inlineSources?: boolean;
     jsx?: string;
+    lib?: string[];
+    listEmittedFiles?: boolean;
+    listFiles?: boolean;
     locale?: string;
     mapRoot?: string;
+    maxNodeModuleJsDepth?: number;
     module?: string;
     moduleResolution: string;
     newLine?: string;
@@ -31,20 +51,39 @@ interface ITsConfigJsonCompilerOptions {
     noEmitHelpers?: boolean;
     noEmitOnError?: boolean;
     noErrorTruncation?: boolean;
+    noFallthroughCasesInSwitch?: boolean;
     noImplicitAny?: boolean;
+    noImplicitReturns?: boolean;
+    noImplicitThis?: boolean;
+    noImplicitUseStrict?: boolean;
     noLib?: boolean;
     noLibCheck?: boolean;
     noResolve?: boolean;
-    out?: string;
+    noUnusedLocals?: boolean;
+    noUnusedParameters?: boolean;
+    out?: string;  //DEPRECATED
     outFile?: string;
     outDir?: string;
+    paths: Object;
     preserveConstEnums?: boolean;
+    pretty: boolean;
+    //project?: string;  //NOT SUPPORTED IN TSCONFIG.JSON
+    reactNamespace?: string;
     removeComments?: boolean;
     rootDir?: string;
+    rootDirs?: string[];
+    skipLibCheck?: boolean;
+    skipDefaultLibCheck?: boolean;
     sourceMap?: boolean;
     sourceRoot?: string;
+    strictNullChecks?: boolean;
+    stripInternal?: boolean;
+    suppressExcessPropertyErrors?: boolean;
     suppressImplicitAnyIndexErrors?: boolean;
     target?: string;
-    version?: boolean;
-    watch?: boolean;
+    traceResolution?: boolean;
+    types?: string[];
+    typeRoots?: string[];
+    //version?: boolean; //NOT SUPPORTED IN TSCONFIG.JSON
+    //watch?: boolean; //NOT SUPPORTED IN TSCONFIG.JSON
 }

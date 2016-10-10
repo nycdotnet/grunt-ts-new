@@ -3,6 +3,8 @@ import * as integrationTests from './test/integrationTests';
 const gruntTsConfig : {[index: string] : IGruntTsGruntfileConfiguration} = {
   test_Integration_CompileTheFruitScripts: {
     options: {
+      target: "es5",
+      noImplicitAny: true
     },
     src: ["artifacts/FruitScripts/**/*.ts"]
   },
@@ -17,6 +19,13 @@ const gruntTsConfig : {[index: string] : IGruntTsGruntfileConfiguration} = {
       __integrationTestFunction : integrationTests.test_FruitScriptsFiles
     },
     files: [{src: "artifacts/FruitScripts/**/*.ts"}]
+  },
+  test_TwoFiles: {
+    options: {
+      __integrationTestFunction : integrationTests.test_TwoFiles
+    },
+    files: [{src: "artifacts/FruitScripts/**/*.ts"},
+          {src: "artifacts/FishScripts/**/*.ts"}]
   }
 };
 

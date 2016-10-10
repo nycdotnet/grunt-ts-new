@@ -14,11 +14,11 @@ const gruntPlugin = (grunt: IGrunt) => {
         }
       } catch (ex) {
         grunt.log.error(ex);
-        grunt.log.writeln(JSON.stringify(this));
+        grunt.log.writeln(JSON.stringify(this,null,2));
         return gruntDone(false);
       }
-      grunt.log.error("Current test failed, but did not throw exception.");
-      grunt.log.writeln(JSON.stringify(this));
+      grunt.log.error(`${this.target ? "Test attached to " + this.target : "Current test"} failed, but did not throw exception.`);
+      grunt.log.writeln(JSON.stringify(this,null,2));
       return gruntDone(false);
     }
 
@@ -47,17 +47,6 @@ const runGruntTsAsync = (ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfigurati
 const runGruntTs = (ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>,
     gruntTsCompletedSuccessfully : () => void,
     gruntTsFailedWithError: (error?: string) => void) => {
-
-  //console.log(JSON.stringify(ctx));
-
-  // // this is nonsense just to prove it works.
-  // if (ctx.data.options.declaration === true) {
-  //   console.log("I see declaration, therefore we are going to resolve.");
-  //   gruntTsCompletedSuccessfully();
-  // } else {
-  //   console.log("I see declaration as false, therefore we are going to reject.");
-  //   gruntTsFailedWithError("declaration is false");
-  // }
 
   let resultingTsConfigObject: Object;
 
