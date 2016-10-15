@@ -15,6 +15,7 @@
         "preserveConstEnums": false,
         "suppressImplicitAnyIndexErrors": true,
         "suppressExcessPropertyErrors": false,
+        "noEmitOnError": false,
         "noImplicitThis": true,
         "noUnusedLocals": true,
         "noUnusedParameters": false,
@@ -23,9 +24,10 @@
         "noFallthroughCasesInSwitch": true,
         "allowUnreachableCode": false,
         "forceConsistentCasingInFileNames": true,
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "pretty": true
     },
-    "include" : ["tasks", "test"],
+    "include" : ["tasks/**/*", "test/**/*", "*"],
     "exclude" : ["node_modules"],
     "compileOnSave": true,
     "buildOnSave": false,

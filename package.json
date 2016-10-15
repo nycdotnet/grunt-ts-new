@@ -13,6 +13,7 @@
     "@types/bluebird": "^3.0.35",
     "@types/grunt": "^0.4.20",
     "@types/nodeunit": "0.0.29",
+    "grunt-contrib-nodeunit": "^1.0.0",
     "nodeunit": "^0.10.2",
     "typescript": "^2.1.0-dev.20161006"
   },

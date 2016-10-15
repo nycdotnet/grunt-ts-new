@@ -1,5 +1,8 @@
 import "grunt";
 
+// The tests in this file are called from the Gruntfile via the __integrationTestFunction
+//  property on the target `options` object
+
 export function test_FruitScriptsSrc(ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>, grunt: IGrunt) {
   AssertStrictEqual(1, ctx.files.length, "There should be one element of files.");
   AssertStrictEqual(2, ctx.files[0]!.src!.length, "The FruitScripts directory has two matching files.");

@@ -63,11 +63,25 @@ const sameNameInTSConfigAndGruntTS = [
     'typeRoots'
 ];
 
+const gruntTSExtensionProperties = ["compile", "compiler", "emitGruntEvents", "failOnTypeErrors"];
 
-export function convertGruntTsContextToTsConfig(ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>) {
 
-    const result = {},
-      co = ctx.data.options;
+export function convertGruntTsContextToTsConfig(ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>): ITSConfigJsonFile {
+
+    if (ctx == undefined || ctx.data == undefined) {
+        throw "Grunt context is undefined."
+    }
+
+    const result: ITSConfigJsonFile = {
+        compilerOptions: {},
+        gruntTsExtensions: {
+            compile: true,
+            compiler: "node_modules/typescript/lib/tsc.js",
+            emitGruntEvents: false,
+            failOnTypeErrors: false
+        }
+    };
+    const co = ctx.data.options;
 
     if (co == undefined) {
       throw "Unable to read options object.";
@@ -75,10 +89,21 @@ export function convertGruntTsContextToTsConfig(ctx: grunt.task.IMultiTask<IGrun
 
     sameNameInTSConfigAndGruntTS.forEach(propertyName => {
         if ((propertyName in co) && !(propertyName in result)) {
-            result[propertyName] = co[propertyName];
+            result.compilerOptions![propertyName] = co[propertyName];
         }
     });
 
-    console.log(JSON.stringify(co, null, 2));
+    gruntTSExtensionProperties.forEach(propertyName => {
+        if ((propertyName in co) && !(propertyName in result)) {
+            result.gruntTsExtensions![propertyName] = co[propertyName];
+        }
+    });
+
+    // grunt-ts supports 'comments' which is the inverse of removeComments.
+    if ("comments" in co && co.comments != undefined) {
+        result.compilerOptions!.removeComments = !co.comments;
+    }
+
+
     return result;
 }

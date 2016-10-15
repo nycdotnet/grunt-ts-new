@@ -8,6 +8,14 @@ interface ITSConfigJsonFile {
     exclude?: string[];
     include?: string[];
     filesGlob?: string[];
+    gruntTsExtensions?: IGruntTsExtensions;
+}
+
+interface IGruntTsExtensions {
+    compile: boolean;
+    compiler: string;
+    emitGruntEvents: boolean;
+    failOnTypeErrors: boolean;
 }
 
 /** This documents the valid and supported items in tsconfig.json compilerOptions object.
@@ -45,7 +53,7 @@ interface ITsConfigJsonCompilerOptions {
     mapRoot?: string;
     maxNodeModuleJsDepth?: number;
     module?: string;
-    moduleResolution: string;
+    moduleResolution?: string;
     newLine?: string;
     noEmit?: boolean;
     noEmitHelpers?: boolean;
@@ -64,9 +72,9 @@ interface ITsConfigJsonCompilerOptions {
     out?: string;  //DEPRECATED
     outFile?: string;
     outDir?: string;
-    paths: Object;
+    paths?: Object;
     preserveConstEnums?: boolean;
-    pretty: boolean;
+    pretty?: boolean;
     //project?: string;  //NOT SUPPORTED IN TSCONFIG.JSON
     reactNamespace?: string;
     removeComments?: boolean;

@@ -1,0 +1,13 @@
+{
+    "version": "0.1.0",
+    "command": "node",
+    "isShellCommand": true,
+    "windows": {
+        "command": "node.exe"
+    },
+    "args": [
+        "node_modules/typescript/bin/tsc", "-p", "."
+    ],
+    "showOutput": "always",
+    "problemMatcher": "$tsc"
+}
