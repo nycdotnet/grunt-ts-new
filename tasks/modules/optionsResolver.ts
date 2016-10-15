@@ -1,3 +1,5 @@
+import * as _ from "lodash";
+
 const sameNameInTSConfigAndGruntTS = [
     'allowJs',
     'allowSyntheticDefaultImports',
@@ -69,7 +71,11 @@ const gruntTSExtensionProperties = ["compile", "compiler", "emitGruntEvents", "f
 export function convertGruntTsContextToTsConfig(ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>): ITSConfigJsonFile {
 
     if (ctx == undefined || ctx.data == undefined) {
-        throw "Grunt context is undefined."
+        throw "Grunt task context or data is undefined."
+    }
+
+    if (ctx.data.options == undefined) {
+      throw "Task options are undefined.";
     }
 
     const result: ITSConfigJsonFile = {
@@ -82,10 +88,6 @@ export function convertGruntTsContextToTsConfig(ctx: grunt.task.IMultiTask<IGrun
         }
     };
     const co = ctx.data.options;
-
-    if (co == undefined) {
-      throw "Unable to read options object.";
-    }
 
     sameNameInTSConfigAndGruntTS.forEach(propertyName => {
         if ((propertyName in co) && !(propertyName in result)) {
@@ -104,6 +106,9 @@ export function convertGruntTsContextToTsConfig(ctx: grunt.task.IMultiTask<IGrun
         result.compilerOptions!.removeComments = !co.comments;
     }
 
+    if ("additionalTsConfigOptions" in co && co.additionalTsConfigOptions != undefined) {
+        _.merge(result, co.additionalTsConfigOptions);
+    }
 
     return result;
 }
