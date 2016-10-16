@@ -65,7 +65,7 @@ const sameNameInTSConfigAndGruntTS = [
     'typeRoots'
 ];
 
-const gruntTSExtensionProperties = ["compile", "compiler", "emitGruntEvents", "failOnTypeErrors"];
+const gruntTSExtensionProperties = ["compile", "compiler", "emitGruntEvents", "failOnTypeErrors", "verbose"];
 
 
 export function convertGruntTsContextToTsConfig(ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>): ITSConfigJsonFile {
@@ -84,7 +84,8 @@ export function convertGruntTsContextToTsConfig(ctx: grunt.task.IMultiTask<IGrun
             compile: true,
             compiler: "node_modules/typescript/lib/tsc.js",
             emitGruntEvents: false,
-            failOnTypeErrors: false
+            failOnTypeErrors: true,
+            verbose: false
         }
     };
     const co = ctx.data.options;

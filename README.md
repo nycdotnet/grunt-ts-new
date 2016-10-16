@@ -14,3 +14,13 @@ Goals:
   * Great documentation and relatively easy for new folks to jump-in.
 
 If the goals are achieved, it should be relatively easy to adapt the new system to work with other Node build tools (Gulp, etc.).
+
+
+## How to build and test
+
+  * Clone the repository
+  * If you have never used Grunt before, you will need to run `npm install -g grunt-cli`.
+  * Run `npm install`
+  * Run `npm run full`
+    * This will build grunt-ts and then run Grunt which will run the integration tests and unit tests.
+    * If it comes back with `Done.`, the build and test was successful.

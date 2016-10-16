@@ -16,6 +16,7 @@ interface IGruntTsExtensions {
     compiler: string;
     emitGruntEvents: boolean;
     failOnTypeErrors: boolean;
+    verbose: boolean;
 }
 
 /** This documents the valid and supported items in tsconfig.json compilerOptions object.

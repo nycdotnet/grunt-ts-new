@@ -4,8 +4,9 @@
   "description": "experimental TypeScript compilation plugin for Grunt",
   "main": "index.js",
   "scripts": {
-    "test": "node node_modules/nodeunit/bin/nodeunit test/tests.js",
-    "build": "node node_modules/typescript/bin/tsc -p ."
+    "test": "grunt nodeunit",
+    "build": "node node_modules/typescript/bin/tsc -p .",
+    "full": "node node_modules/typescript/bin/tsc -p . && grunt"
   },
   "author": "Steve Ognibene",
   "license": "MIT",

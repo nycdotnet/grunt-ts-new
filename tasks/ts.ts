@@ -7,19 +7,7 @@ const gruntPlugin = (grunt: IGrunt) => {
 
     // run hook for integration tests, if available.
     if (this.data.options && this.data.options.__integrationTestFunction) {
-      try {
-        const testResult = this.data.options.__integrationTestFunction(this, grunt);
-        if (testResult) {
-          return gruntDone();
-        }
-      } catch (ex) {
-        grunt.log.error(ex);
-        grunt.log.writeln(JSON.stringify(this,null,2));
-        return gruntDone(false);
-      }
-      grunt.log.error(`${this.target ? "Test attached to " + this.target : "Current test"} failed, but did not throw exception.`);
-      grunt.log.writeln(JSON.stringify(this,null,2));
-      return gruntDone(false);
+      return gruntDone(processIntegrationTest(this, grunt));
     }
 
     // run grunt-ts as a promise.
@@ -31,6 +19,22 @@ const gruntPlugin = (grunt: IGrunt) => {
     });
   });
 };
+
+const processIntegrationTest = (ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>, grunt: IGrunt) : false | undefined => {
+      try {
+         const testResult = ctx.data.options!.__integrationTestFunction!(ctx, grunt);
+         if (testResult) {
+           return undefined;
+         }
+      } catch (ex) {
+         grunt.log.error(ex);
+         grunt.log.writeln(JSON.stringify(ctx,null,2));
+         return false;
+      }
+       grunt.log.error(`${ctx.target ? "Test attached to " + ctx.target : "Current test"} failed, but did not throw exception.`);
+       grunt.log.writeln(JSON.stringify(ctx,null,2));
+       return false;
+}
 
 
 const runGruntTsAsync = (ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>) => {
