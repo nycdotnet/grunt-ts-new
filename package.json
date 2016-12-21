@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "grunt nodeunit",
-    "build": "node node_modules/typescript/bin/tsc -p .",
-    "full": "node node_modules/typescript/bin/tsc -p . && grunt"
+    "watch": "tsc -p . -w",
+    "full": "tsc -p . && grunt"
   },
   "author": "Steve Ognibene",
   "license": "MIT",
@@ -17,7 +17,7 @@
     "@types/nodeunit": "0.0.29",
     "grunt-contrib-nodeunit": "^1.0.0",
     "nodeunit": "^0.10.2",
-    "typescript": "^2.1.0-dev.20161006"
+    "typescript": "^2.1.4"
   },
   "dependencies": {
     "bluebird": "^3.4.6",
