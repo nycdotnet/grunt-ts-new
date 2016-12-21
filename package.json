@@ -6,7 +6,7 @@
   "scripts": {
     "test": "grunt nodeunit",
     "watch": "tsc -p . -w",
-    "full": "tsc -p . && grunt"
+    "full": "tsc -p tsconfig-release.json && grunt"
   },
   "author": "Steve Ognibene",
   "license": "MIT",

@@ -6,7 +6,7 @@
         "command": "node.exe"
     },
     "args": [
-        "node_modules/typescript/bin/tsc", "-p", "."
+        "node_modules/typescript/bin/tsc", "-p", "tsconfig-dev.json"
     ],
     "showOutput": "always",
     "problemMatcher": "$tsc"

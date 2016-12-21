@@ -3,10 +3,10 @@ import * as or from '../tasks/modules/optionsResolver';
 
 export const tests : nodeunit.ITestGroup = {
   "Options Resolver tests": {
-    "Passed-in parameters come out as expected": (test: nodeunit.Test) => {
+    "Passed-in parameters come out as expected": async (test: nodeunit.Test) => {
       test.expect(48);
 
-      var sut = or.convertGruntTsContextToTsConfig(<any>{
+      var sut = await or.convertGruntTsContextToTsConfig(<any>{
           data: <IGruntTsGruntfileConfiguration>{
             options: {
                 additionalTsConfigOptions: {
