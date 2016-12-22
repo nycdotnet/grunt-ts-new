@@ -15,6 +15,7 @@
         "preserveConstEnums": false,
         "suppressImplicitAnyIndexErrors": true,
         "suppressExcessPropertyErrors": false,
+        "sourceMap": true,
         "noEmitOnError": false,
         "noImplicitThis": true,
         "noUnusedLocals": false,
