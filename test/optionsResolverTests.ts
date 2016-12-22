@@ -17,7 +17,7 @@ export const tests : nodeunit.ITestGroup = {
         test.expect(1);
         try {
             var sut = await or.convertGruntTsContextToTsConfigAsync(<any>{data: undefined});
-            test.fail("no exception", "exception", "expected an exception when the context is undefined.", "");
+            test.fail("no exception", "exception", "expected an exception when the context data is undefined.", "");
         } catch(error) {
             test.strictEqual(error, "Grunt task context or data is undefined.");
         }
@@ -27,7 +27,7 @@ export const tests : nodeunit.ITestGroup = {
         test.expect(1);
         try {
             var sut = await or.convertGruntTsContextToTsConfigAsync(<any>{data: {options: undefined}});
-            test.fail("no exception", "exception", "expected an exception when the context is undefined.", "");
+            test.fail("no exception", "exception", "expected an exception when the data options are undefined.", "");
         } catch(error) {
             test.strictEqual(error, "Task options are undefined.");
         }

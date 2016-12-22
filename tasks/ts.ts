@@ -1,10 +1,8 @@
 import * as optionsResolver from "./modules/optionsResolver";
 import * as tsconfigEmitter from "./modules/tsconfigEmitter";
+import * as bluebird from "bluebird";
 
-if (!Promise) {
-  const bluebird = require("bluebird");
-  Promise = bluebird;
-}
+Promise = bluebird;
 
 const processIntegrationTest = (ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>, grunt: IGrunt) : false | undefined => {
   try {
@@ -40,8 +38,9 @@ async function gruntPlugin(grunt: IGrunt) {
 }
 
 async function runGruntTsAsync(ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>) {
-  let resultingTsConfigObject = optionsResolver.convertGruntTsContextToTsConfigAsync(ctx);
-  let temporaryTsconfigJsonFileName = tsconfigEmitter.emitTemporaryTsconfigJsonAsync(resultingTsConfigObject, ctx);
+  let resultingTsConfigObject = await optionsResolver.convertGruntTsContextToTsConfigAsync(ctx);
+  let temporaryTsconfigJsonFileName = await tsconfigEmitter.emitTemporaryTsconfigJsonAsync(resultingTsConfigObject, ctx);
+  console.log("temp name: " + temporaryTsconfigJsonFileName);
 }
 
 export = gruntPlugin;
