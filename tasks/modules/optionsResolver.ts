@@ -67,9 +67,7 @@ const sameNameInTSConfigAndGruntTS = [
 
 const gruntTSExtensionProperties = ["compile", "compiler", "emitGruntEvents", "failOnTypeErrors", "verbose"];
 
-
-export async function convertGruntTsContextToTsConfig(ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>): Promise<ITSConfigJsonFile> {
-
+export async function convertGruntTsContextToTsConfigAsync(ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>): Promise<ITSConfigJsonFile> {
     if (ctx == undefined || ctx.data == undefined) {
         throw "Grunt task context or data is undefined."
     }

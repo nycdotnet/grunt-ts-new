@@ -3,10 +3,40 @@ import * as or from '../tasks/modules/optionsResolver';
 
 export const tests : nodeunit.ITestGroup = {
   "Options Resolver tests": {
+    "undefined context throws": async (test: nodeunit.Test) => {
+        test.expect(1);
+        try {
+            var sut = await or.convertGruntTsContextToTsConfigAsync(<any>undefined);
+            test.fail("no exception", "exception", "expected an exception when the context is undefined.", "");
+        } catch(error) {
+            test.strictEqual(error, "Grunt task context or data is undefined.");
+        }
+        test.done();
+    },
+    "undefined context.data throws": async (test: nodeunit.Test) => {
+        test.expect(1);
+        try {
+            var sut = await or.convertGruntTsContextToTsConfigAsync(<any>{data: undefined});
+            test.fail("no exception", "exception", "expected an exception when the context is undefined.", "");
+        } catch(error) {
+            test.strictEqual(error, "Grunt task context or data is undefined.");
+        }
+        test.done();
+    },
+    "undefined context.data.options throws": async (test: nodeunit.Test) => {
+        test.expect(1);
+        try {
+            var sut = await or.convertGruntTsContextToTsConfigAsync(<any>{data: {options: undefined}});
+            test.fail("no exception", "exception", "expected an exception when the context is undefined.", "");
+        } catch(error) {
+            test.strictEqual(error, "Task options are undefined.");
+        }
+        test.done();
+    },
     "Passed-in parameters come out as expected": async (test: nodeunit.Test) => {
       test.expect(48);
 
-      var sut = await or.convertGruntTsContextToTsConfig(<any>{
+      var sut = await or.convertGruntTsContextToTsConfigAsync(<any>{
           data: <IGruntTsGruntfileConfiguration>{
             options: {
                 additionalTsConfigOptions: {

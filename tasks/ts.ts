@@ -1,4 +1,5 @@
 import * as optionsResolver from "./modules/optionsResolver";
+import * as tsconfigEmitter from "./modules/tsconfigEmitter";
 
 if (!Promise) {
   const bluebird = require("bluebird");
@@ -33,14 +34,14 @@ async function gruntPlugin(grunt: IGrunt) {
       await runGruntTsAsync(this);
       gruntDone();
     } catch(error) {
-      grunt.log.error(`failed with error: ${error}`);
-      gruntDone(false);
+      gruntDone(grunt.util.error(`failed with error: ${error}`, error));
     }
   });
 }
 
 async function runGruntTsAsync(ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>) {
-  let resultingTsConfigObject = optionsResolver.convertGruntTsContextToTsConfig(ctx);
+  let resultingTsConfigObject = optionsResolver.convertGruntTsContextToTsConfigAsync(ctx);
+  let temporaryTsconfigJsonFileName = tsconfigEmitter.emitTemporaryTsconfigJsonAsync(resultingTsConfigObject, ctx);
 }
 
 export = gruntPlugin;
