@@ -15,6 +15,7 @@ const openAsync = <Function>bluebird.promisify(fs.open) as
     OPEN_FOR_WRITING_BUT_FAIL_IF_PATH_EXISTS = 'wx',
     ANYONE_READWRITE_NOT_EXECUTE = 0o0666;
 
+export const deleteAsync = <Function>bluebird.promisify(fs.unlink) as (path: string) => undefined
 
 export async function emitTemporaryTsconfigJsonAsync(tsconfig: ITSConfigJsonFile, ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>): Promise<string> {
 

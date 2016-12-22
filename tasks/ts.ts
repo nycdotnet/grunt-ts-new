@@ -38,9 +38,9 @@ async function gruntPlugin(grunt: IGrunt) {
 }
 
 async function runGruntTsAsync(ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>) {
-  let resultingTsConfigObject = await optionsResolver.convertGruntTsContextToTsConfigAsync(ctx);
-  let temporaryTsconfigJsonFileName = await tsconfigEmitter.emitTemporaryTsconfigJsonAsync(resultingTsConfigObject, ctx);
-  console.log("temp name: " + temporaryTsconfigJsonFileName);
+  const resultingTsConfigObject = await optionsResolver.convertGruntTsContextToTsConfigAsync(ctx);
+  const temporaryTsConfigJsonFileName = await tsconfigEmitter.emitTemporaryTsconfigJsonAsync(resultingTsConfigObject, ctx);
+  const result = await tsconfigEmitter.deleteAsync(temporaryTsConfigJsonFileName);
 }
 
 export = gruntPlugin;
