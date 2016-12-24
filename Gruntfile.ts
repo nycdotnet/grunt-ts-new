@@ -8,6 +8,31 @@ const gruntTsConfig : {[index: string] : IGruntTsGruntfileConfiguration} = {
     },
     src: ["artifacts/FruitScripts/**/*.ts"]
   },
+  test_Integration_FailOnTypeErrors: {
+    options: {
+      target: "es5",
+      noImplicitAny: true,
+      failOnTypeErrors: true,
+      noEmitOnError: true,
+    },
+    src: ["artifacts/TypeErrors/**/*.ts"]
+  },
+  test_Integration_FailOnSyntaxErrors: {
+    options: {
+      target: "es5",
+      noImplicitAny: true,
+      failOnTypeErrors: true,
+    },
+    src: ["artifacts/CompileErrors/**/*.ts"]
+  },
+  test_Integration_DoNotFailOnTypeErrors: {
+    options: {
+      target: "es5",
+      noImplicitAny: true,
+      failOnTypeErrors: false,
+    },
+    src: ["artifacts/TypeErrors/**/*.ts"]
+  },
   test_FruitScriptsSrc: {
     options: {
       __integrationTestFunction : integrationTests.test_FruitScriptsSrc

@@ -67,6 +67,15 @@ const sameNameInTSConfigAndGruntTS = [
 
 const gruntTSExtensionProperties = ["compile", "compiler", "emitGruntEvents", "failOnTypeErrors", "verbose"];
 
+export function addFiles(tsconfig: ITSConfigJsonFile, filesToAdd: string[]) {
+    const result: ITSConfigJsonFile = _.assign({}, tsconfig)
+    if (!("files" in result)) {
+        result.files = [];
+    }
+    result.files!.push(...filesToAdd);
+    return result;
+}
+
 export async function convertGruntTsContextToTsConfigAsync(ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>): Promise<ITSConfigJsonFile> {
     if (ctx == undefined || ctx.data == undefined) {
         throw "Grunt task context or data is undefined."
