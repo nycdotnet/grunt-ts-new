@@ -11,7 +11,6 @@ const openAsync = <Function>bluebird.promisify(fs.open) as
     writeAsync = <Function>bluebird.promisify(fs.write) as
         (fd: number, buffer: Buffer, offset: number, length: number, position: number | null) => number,
     closeAsync = <Function>bluebird.promisify(fs.close) as (fd: number) => undefined,
-    tempDir = os.tmpdir(),
     OPEN_FOR_WRITING_BUT_FAIL_IF_PATH_EXISTS = 'wx',
     ANYONE_READWRITE_NOT_EXECUTE = 0o0666;
 
@@ -46,7 +45,7 @@ async function openTempTsconfigAsync(): Promise<{fileDescriptor: number, path: s
 
     while (i < maxTries) {
         const buffer = crypto.randomBytes(16);
-        const temporaryTsConfigJsonPath = path.join(tempDir, buffer.toString('hex') + "-tsconfig.json");
+        const temporaryTsConfigJsonPath = path.join(buffer.toString('hex') + "-tsconfig.tmp.json");
         try {
             const openFileDescriptor = await openAsync(temporaryTsConfigJsonPath, OPEN_FOR_WRITING_BUT_FAIL_IF_PATH_EXISTS, ANYONE_READWRITE_NOT_EXECUTE);
             return {fileDescriptor: openFileDescriptor, path: temporaryTsConfigJsonPath};
@@ -58,5 +57,5 @@ async function openTempTsconfigAsync(): Promise<{fileDescriptor: number, path: s
         i += 1;
     }
 
-    throw `Could not obtain a valid temporary file in ${tempDir} in ${maxTries} tries.  Errors: ${errors.join(". ")}`;
+    throw `Could not obtain a valid temporary file in ${maxTries} tries.  Errors: ${errors.join(". ")}`;
 }

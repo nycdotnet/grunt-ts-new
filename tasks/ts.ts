@@ -4,6 +4,8 @@ import * as bluebird from "bluebird";
 
 Promise = bluebird;
 
+let spawnAsync: (options: {cmd: string, args: string[]}) => {stdout: string, stderr: string, code: number};
+
 const processIntegrationTest = (ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>, grunt: IGrunt) : false | undefined => {
   try {
       const testResult = ctx.data.options!.__integrationTestFunction!(ctx, grunt);
@@ -21,6 +23,8 @@ const processIntegrationTest = (ctx: grunt.task.IMultiTask<IGruntTsGruntfileConf
 }
 
 async function gruntPlugin(grunt: IGrunt) {
+  spawnAsync = <any>bluebird.promisify(grunt.util.spawn);
+
   grunt.registerMultiTask('ts', 'TypeScript integration for Grunt', async function (this: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>) {
     const gruntDone = this.async();
 
@@ -38,9 +42,19 @@ async function gruntPlugin(grunt: IGrunt) {
 }
 
 async function runGruntTsAsync(ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>) {
+  
   const resultingTsConfigObject = await optionsResolver.convertGruntTsContextToTsConfigAsync(ctx);
   const temporaryTsConfigJsonFileName = await tsconfigEmitter.emitTemporaryTsconfigJsonAsync(resultingTsConfigObject, ctx);
-  const result = await tsconfigEmitter.deleteAsync(temporaryTsConfigJsonFileName);
+  var runResult;
+  try {
+    const tscArgs = ["node_modules/typescript/lib/tsc.js", "-p", temporaryTsConfigJsonFileName];
+    console.log("tsc args: " + JSON.stringify(tscArgs));
+    runResult = await spawnAsync({cmd: process.execPath, args: tscArgs});
+  } catch(error) {
+    console.log("Error" + JSON.stringify(error));
+  }
+  console.log(JSON.stringify(runResult));
+  //const result = await tsconfigEmitter.deleteAsync(temporaryTsConfigJsonFileName);
 }
 
 export = gruntPlugin;
