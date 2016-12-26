@@ -4,6 +4,7 @@ node_modules/
 *.js.map
 .alm/
 *.log.*
+*.tmp.json
 
 #################
 ## Eclipse
