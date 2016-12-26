@@ -6,7 +6,7 @@ export const tests : nodeunit.ITestGroup = {
     "undefined context throws": async (test: nodeunit.Test) => {
         test.expect(1);
         try {
-            var sut = await or.convertGruntTsContextToTsConfigAsync(<any>undefined);
+            var sut = await or.convertGruntTsContextToTsConfigAsync(<any>undefined, <any>undefined);
             test.fail("no exception", "exception", "expected an exception when the context is undefined.", "");
         } catch(error) {
             test.strictEqual(error, "Grunt task context or data is undefined.");
@@ -16,7 +16,7 @@ export const tests : nodeunit.ITestGroup = {
     "undefined context.data throws": async (test: nodeunit.Test) => {
         test.expect(1);
         try {
-            var sut = await or.convertGruntTsContextToTsConfigAsync(<any>{data: undefined});
+            var sut = await or.convertGruntTsContextToTsConfigAsync(<any>undefined, <any>{data: undefined});
             test.fail("no exception", "exception", "expected an exception when the context data is undefined.", "");
         } catch(error) {
             test.strictEqual(error, "Grunt task context or data is undefined.");
@@ -26,7 +26,7 @@ export const tests : nodeunit.ITestGroup = {
     "undefined context.data.options throws": async (test: nodeunit.Test) => {
         test.expect(1);
         try {
-            var sut = await or.convertGruntTsContextToTsConfigAsync(<any>{data: {options: undefined}});
+            var sut = await or.convertGruntTsContextToTsConfigAsync(<any>undefined, <any>{data: {options: undefined}});
             test.fail("no exception", "exception", "expected an exception when the data options are undefined.", "");
         } catch(error) {
             test.strictEqual(error, "Task options are undefined.");
@@ -36,7 +36,7 @@ export const tests : nodeunit.ITestGroup = {
     "Passed-in parameters come out as expected": async (test: nodeunit.Test) => {
       test.expect(48);
 
-      var sut = await or.convertGruntTsContextToTsConfigAsync(<any>{
+      var sut = await or.convertGruntTsContextToTsConfigAsync(<any>undefined, <any>{
           data: <IGruntTsGruntfileConfiguration>{
             options: {
                 additionalTsConfigOptions: {

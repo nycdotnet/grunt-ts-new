@@ -65,7 +65,7 @@ const sameNameInTSConfigAndGruntTS = [
     'typeRoots'
 ];
 
-const gruntTSExtensionProperties = ["compile", "compiler", "emitGruntEvents", "failOnTypeErrors", "verbose"];
+const gruntTSExtensionProperties = ["compile", "compiler", "emitGruntEvents", "verbose", "failOnTypeErrors"];
 
 export function addFiles(tsconfig: ITSConfigJsonFile, filesToAdd: string[]) {
     const result: ITSConfigJsonFile = _.assign({}, tsconfig)
@@ -76,7 +76,7 @@ export function addFiles(tsconfig: ITSConfigJsonFile, filesToAdd: string[]) {
     return result;
 }
 
-export async function convertGruntTsContextToTsConfigAsync(ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>): Promise<ITSConfigJsonFile> {
+export async function convertGruntTsContextToTsConfigAsync(grunt: IGrunt, ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>): Promise<ITSConfigJsonFile> {
     if (ctx == undefined || ctx.data == undefined) {
         throw "Grunt task context or data is undefined."
     }

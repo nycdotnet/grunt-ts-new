@@ -43,13 +43,28 @@ async function gruntPlugin(grunt: IGrunt) {
 
 async function runGruntTsAsync(grunt: IGrunt, ctx: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>) {
   
-  const sharedTsConfigObject = await optionsResolver.convertGruntTsContextToTsConfigAsync(ctx);
+  const sharedTsConfigObject = await optionsResolver.convertGruntTsContextToTsConfigAsync(grunt, ctx);
   const compileResults: compilerRunner.ICompileResult[] = [];
 
   for (let filesIndex = 0; filesIndex < ctx.files.length; filesIndex += 1) {
     const compilationSpecificTsConfig = optionsResolver.addFiles(sharedTsConfigObject, ctx.files[filesIndex].src || []);
     const temporaryTsConfigJsonFileName = await tsconfigEmitter.emitTemporaryTsconfigJsonAsync(compilationSpecificTsConfig, ctx);
-    compileResults.push(await compilerRunner.compile(grunt, temporaryTsConfigJsonFileName));
+    const result = await compilerRunner.compile(grunt, temporaryTsConfigJsonFileName);
+    compileResults.push(result);
+    
+    if (result.exitCode !== 0) {
+      if (result.exitCode === 1) {
+        grunt.log.error(`TypeScript compilation failure prevented emit.`)
+      } else if (result.exitCode === 2) {
+        grunt.log.writeln(`TypeScript compilation completed with non-emit-preventing errors.`);
+        if (compilationSpecificTsConfig.gruntTsExtensions!.failOnTypeErrors) {
+          grunt.log.error(`Aborting due to grunt-ts failOnTypeErrors setting.`);
+        }
+      } else {
+        grunt.log.warn(`Unknown TypeScript exit code of ${result.exitCode}.`)
+      }
+
+    }
   }
   const totalRuntimeInMs = (new Date()).getTime() - startTime.getTime();
   grunt.log.writeln(`Grunt-ts complete.  Took ${totalRuntimeInMs} ms.`);
