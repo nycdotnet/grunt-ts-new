@@ -31,3 +31,30 @@ function AssertStrictEqual<T>(expected: T, actual: T, message?: string) {
   }
   throw `${message} (got ${actual}).`;
 }
+
+export namespace failureAnalysis {
+  let totalFailures = 0;
+  let tasksExpectedToFail: string[] = [];
+  export function initialize(grunt: IGrunt) {
+    grunt.event.on('grunt-ts.failure', () => totalFailures += 1);
+
+    setupFailTasks(grunt.config.get('ts') as any);
+
+    grunt.registerTask('validate_failure_count', 'Counts failure events emitted by grunt-ts', () => {
+        grunt.log.writeln(`Expected ${tasksExpectedToFail.length} task failures and got ${totalFailures} failures.`);
+        if (tasksExpectedToFail.length === 0) {
+            grunt.log.error('Should have more than zero expected failures.');
+            return false;
+        }
+        return (totalFailures === tasksExpectedToFail.length);
+    });
+  }
+
+  function setupFailTasks(tasks: {[index: string]: grunt.task.IMultiTask<IGruntTsGruntfileConfiguration>}) {
+    for (let taskName in tasks) {
+      if ((tasks[taskName].options as IGruntTsGruntfileConfigurationOptions).expectThisTaskWillFail) {
+        tasksExpectedToFail.push(taskName);
+      }
+    }
+  }
+}

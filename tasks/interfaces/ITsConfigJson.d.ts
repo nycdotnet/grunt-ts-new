@@ -14,7 +14,7 @@ interface ITSConfigJsonFile {
 interface IGruntTsExtensions {
     compile: boolean;
     compiler: string;
-    emitGruntEvents: boolean;
+    emitGruntEventInsteadOfFailing: boolean;
     failOnTypeErrors: boolean;
     verbose: boolean;
 }

@@ -55,7 +55,7 @@ export const tests : nodeunit.ITestGroup = {
                 declaration: false,
                 emitBOM: true,
                 emitDecoratorMetadata: true,
-                emitGruntEvents: true,
+                emitGruntEventInsteadOfFailing: true,
                 experimentalAsyncFunctions: false,
                 experimentalDecorators: true,
                 failOnTypeErrors: false,
@@ -142,7 +142,7 @@ export const tests : nodeunit.ITestGroup = {
 
       test.strictEqual(sut.gruntTsExtensions.compile, false, "compile");
       test.strictEqual(sut.gruntTsExtensions.compiler, "somecompiler.js", "compiler");
-      test.strictEqual(sut.gruntTsExtensions.emitGruntEvents, true, "emitGruntEvents");
+      test.strictEqual(sut.gruntTsExtensions.emitGruntEventInsteadOfFailing, true, "emitGruntEventInsteadOfFailing");
       test.strictEqual(sut.gruntTsExtensions.failOnTypeErrors, false, "failOnTypeErrors");
       test.strictEqual(sut.gruntTsExtensions.verbose, true, "verbose");
 

@@ -14,6 +14,8 @@ const gruntTsConfig : {[index: string] : IGruntTsGruntfileConfiguration} = {
       noImplicitAny: true,
       failOnTypeErrors: true,
       noEmitOnError: true,
+      emitGruntEventInsteadOfFailing: true,
+      expectThisTaskWillFail: true
     },
     src: ["artifacts/TypeErrors/**/*.ts"]
   },
@@ -22,6 +24,8 @@ const gruntTsConfig : {[index: string] : IGruntTsGruntfileConfiguration} = {
       target: "es5",
       noImplicitAny: true,
       failOnTypeErrors: true,
+      emitGruntEventInsteadOfFailing: true,
+      expectThisTaskWillFail: true
     },
     src: ["artifacts/CompileErrors/**/*.ts"]
   },
@@ -30,6 +34,7 @@ const gruntTsConfig : {[index: string] : IGruntTsGruntfileConfiguration} = {
       target: "es5",
       noImplicitAny: true,
       failOnTypeErrors: false,
+      expectThisTaskWillFail: false
     },
     src: ["artifacts/TypeErrors/**/*.ts"]
   },
@@ -59,12 +64,20 @@ const gruntFunction = function (grunt: IGrunt) {
     ts : gruntTsConfig,
     nodeunit: {
       fast: ["test/tests.js", "test/optionsResolverTests.js"]
+    },
+    clean: {
+      default: [
+        "*.tmp.json"
+      ]
     }
   });
 
+  integrationTests.failureAnalysis.initialize(grunt);
+
   grunt.loadTasks('tasks');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
-  grunt.registerTask('default', ['ts', 'nodeunit']);
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.registerTask('default', ['ts', 'validate_failure_count', 'nodeunit', 'clean']);
   
 };
 

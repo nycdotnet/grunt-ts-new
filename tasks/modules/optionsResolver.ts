@@ -65,7 +65,7 @@ const sameNameInTSConfigAndGruntTS = [
     'typeRoots'
 ];
 
-const gruntTSExtensionProperties = ["compile", "compiler", "emitGruntEvents", "verbose", "failOnTypeErrors"];
+const gruntTSExtensionProperties = ["compile", "compiler", "emitGruntEventInsteadOfFailing", "verbose", "failOnTypeErrors"];
 
 export function addFiles(tsconfig: ITSConfigJsonFile, filesToAdd: string[]) {
     const result: ITSConfigJsonFile = _.assign({}, tsconfig)
@@ -90,7 +90,7 @@ export async function convertGruntTsContextToTsConfigAsync(grunt: IGrunt, ctx: g
         gruntTsExtensions: {
             compile: true,
             compiler: "node_modules/typescript/lib/tsc.js",
-            emitGruntEvents: false,
+            emitGruntEventInsteadOfFailing: false,
             failOnTypeErrors: true,
             verbose: false
         }

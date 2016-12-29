@@ -33,6 +33,8 @@ interface IGruntTsGruntfileConfigurationOptions {
     sourceRoot?: string;
     target?: string;
     failOnTypeErrors?: boolean;
+    /** internal grunt-ts option. */
+    expectThisTaskWillFail?: boolean;
     /** If a type error occurs, do not emit the JavaScript.  New in TypeScript 1.4.  */
     noEmitOnError?: boolean;
     /** Const enums will be kept as enums in the emitted JS. If false, the enum values will
@@ -64,7 +66,7 @@ interface IGruntTsGruntfileConfigurationOptions {
     /** Sepecifies the root directory of input files.  Use to control the output directory structure with --outDir. */
     rootDir?: string;
     /** grunt-ts setting to emit events in Grunt */
-    emitGruntEvents?: boolean;
+    emitGruntEventInsteadOfFailing?: boolean;
     /** noLib - do not auto-include the lib.d.ts file in the compilation context */
     noLib?: boolean;
     /** emitBOM - indicates if emitted files should include a Byte Order Mark */
@@ -148,7 +150,7 @@ interface IGruntTsGruntfileConfigurationOptions {
     /** Sepecifies the root directory of input files.  Use to control the output directory structure with --outDir. */
     rootDir?: string;
     /** grunt-ts setting to emit events in Grunt */
-    emitGruntEvents?: boolean;
+    emitGruntEventInsteadOfFailing?: boolean;
     /** noLib - do not auto-include the lib.d.ts file in the compilation context */
     noLib?: boolean;
     /** emitBOM - indicates if emitted files should include a Byte Order Mark */

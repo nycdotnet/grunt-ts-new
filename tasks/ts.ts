@@ -3,6 +3,8 @@ import * as tsconfigEmitter from "./modules/tsconfigEmitter";
 import * as compilerRunner from "./modules/compilerRunner";
 import * as bluebird from "bluebird";
 
+const fail_event = 'grunt-ts.failure';
+
 Promise = bluebird;
 let startTime: Date;
 
@@ -54,21 +56,30 @@ async function runGruntTsAsync(grunt: IGrunt, ctx: grunt.task.IMultiTask<IGruntT
     
     if (result.exitCode !== 0) {
       if (result.exitCode === 1) {
-        grunt.log.error(`TypeScript compilation failure prevented emit.`)
+        failGruntTs(`TypeScript compilation failure prevented emit.`, grunt, compilationSpecificTsConfig);
       } else if (result.exitCode === 2) {
         grunt.log.writeln(`TypeScript compilation completed with non-emit-preventing errors.`);
         if (compilationSpecificTsConfig.gruntTsExtensions!.failOnTypeErrors) {
-          grunt.log.error(`Aborting due to grunt-ts failOnTypeErrors setting.`);
+          failGruntTs(`Aborting due to grunt-ts failOnTypeErrors setting.`, grunt, compilationSpecificTsConfig);
         }
       } else {
-        grunt.log.warn(`Unknown TypeScript exit code of ${result.exitCode}.`)
+        failGruntTs(`Unknown TypeScript exit code of ${result.exitCode}.`, grunt, compilationSpecificTsConfig);
       }
-
     }
   }
+  
   const totalRuntimeInMs = (new Date()).getTime() - startTime.getTime();
   grunt.log.writeln(`Grunt-ts complete.  Took ${totalRuntimeInMs} ms.`);
 
+}
+
+function failGruntTs(message: string, grunt: IGrunt, tsconfig: ITSConfigJsonFile) {
+  if (tsconfig.gruntTsExtensions!.emitGruntEventInsteadOfFailing) {
+    grunt.log.error(`${message} {{emitting Grunt fail event instead of failing}}`);
+    grunt.event.emit(fail_event);
+  } else {
+    grunt.fail.warn(message);
+  }
 }
 
 export = gruntPlugin;
